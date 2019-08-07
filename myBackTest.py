@@ -58,7 +58,7 @@ i = 0
 profit = loss = count1 = count2 = drawdown = start = 0
 price2=0
 
-myjpy = 100000
+myjpy = 10000
 mybtc=0
 
 asset_list = [myjpy]
