@@ -41,7 +41,7 @@ class TradeMethod:
                 result = self.wrap.post_cancel_all_orders()
             except:
                 time.sleep(Tradeconfig.check_sleep_time)
-                print("Failed to Cancel All Orders")
+                # print("Failed to Cancel All Orders")
                 count+=1
                 if count > Tradeconfig.check_count:
                     self.d_message("TradeMethod/cancel_all_orders : Failed to Cancel All Orders.")
@@ -51,7 +51,7 @@ class TradeMethod:
                     return True
                 else:
                     time.sleep(Tradeconfig.check_sleep_time)
-                    print("Failed to Cancel All Orders")
+                    # print("Failed to Cancel All Orders")
                     count+=1
                     if count > Tradeconfig.check_count:
                         self.d_message("TradeMethod/cancel_all_orders : Failed to Cancel All Orders.")
@@ -62,7 +62,7 @@ class TradeMethod:
             try:
                 result = self.wrap.post_send_childorder("LIMIT", "BUY", price, amount)
             except:
-                print("注文が失敗しました")
+                # print("注文が失敗しました")
                 return False,None
             else:
                 if result["status_code"] == 200:
@@ -90,7 +90,7 @@ class TradeMethod:
             try:
                 result = self.wrap.post_send_childorder("LIMIT", "SELL", price, amount)
             except:
-                print("注文が失敗しました")
+                # print("注文が失敗しました")
                 return False,None
             else:
                 if result["status_code"] == 200:
@@ -118,7 +118,7 @@ class TradeMethod:
             try:
                 result = self.wrap.post_send_childorder("MARKET", "SELL", None, amount)
             except:
-                print("注文が失敗しました")
+                # print("注文が失敗しました")
                 return False,None
             else:
                 if result["status_code"] == 200:
@@ -180,7 +180,7 @@ class TradeMethod:
                     raise Exception("Illegal balance")
             except:
                 time.sleep(Tradeconfig.check_sleep_time)
-                print("Failed to check balances")
+                # print("Failed to check balances")
                 count+=1
                 if count > Tradeconfig.check_count:
                     self.d_message("TradeMethod/get_balance : Failed to check balances.")

@@ -50,7 +50,7 @@ result = None
 print("Initialize conpleted")
 while True:
     time.sleep(Tradeconfig.sleep_time)
-    print("Running..."+thread_flag)
+    # print("Running..."+thread_flag)
     
     if thread_flag == buy_jdg:
         #データを取得して買い判定か調べる
