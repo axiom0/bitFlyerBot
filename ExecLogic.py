@@ -2,6 +2,7 @@ import requests
 import time
 from pprint import pprint
 from config import Tradeconfig
+from datetime import datetime
 
 class ExecLogic:
 
@@ -43,6 +44,7 @@ class ExecLogic:
         l = Tradeconfig.buy_judge_limit
 
         if ((d0>0) and (d1>0) and (d2>0)) and (d0/d2 >l and d1/d2 >l):
+            print(datetime.fromtimestamp(data[i][0]))
             return True
         else:
             return False
@@ -70,8 +72,10 @@ class ExecLogic:
         wm_now /= sum0
         wm_post /= sum0
 
+        
 
         if sm_post>wm_post and sm_now<wm_now and sm_now<sm_post:
+            print(datetime.fromtimestamp(data[i][0]))
             return True
         else:
             return False
