@@ -5,8 +5,8 @@ import datetime
 import json
 from pprint import pprint
 import numpy as np
-# import pandas as pd
-# from matplotlib import pyplot as plt
+import pandas as pd
+from matplotlib import pyplot as plt
 from ExecLogic import ExecLogic
 from config import Tradeconfig
 
@@ -123,6 +123,6 @@ print("loss:"+str(loss))
 print("earn:"+str(myjpy+mybtc*res[i][4]))
 print("count1:"+str(count1))
 print("count2:"+str(count2))
-# ts = pd.Series(np.array(asset_list))
-# ts.plot()
-# plt.show()
+ts = pd.Series(np.array(asset_list))
+ts.plot()
+plt.show()
