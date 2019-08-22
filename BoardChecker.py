@@ -31,10 +31,10 @@ def request_candle():
 def insert_database(response_data):
     try:
         con = sqlite3.connect(dbname)
-        create_table = "CREATE TABLE IF NOT EXISTS" + pair +"(CloseTime integer, OpenPrice integer, HighPrice integer, LowPrice integer, ClosePrice integer, BTCVolume real, JPYVolume real)"
+        create_table = "CREATE TABLE IF NOT EXISTS " + pair +"(CloseTime integer, OpenPrice integer, HighPrice integer, LowPrice integer, ClosePrice integer, BTCVolume real, JPYVolume real)"
         con.execute(create_table)
 
-        unique = "CREATE UNIQUE INDEX IF NOT EXISTS time ON"+ pair +"(CloseTime)"
+        unique = "CREATE UNIQUE INDEX IF NOT EXISTS time ON "+ pair +"(CloseTime)"
         con.execute(unique)
 
         for i in range(list_size/2-20,len(response_data)):
@@ -49,7 +49,7 @@ def insert_database(response_data):
         trader.d_message("Successfully inserted " + pair + " data")
     except Exception as e:
         print(e)
-        trader.d_message(e)
+        trader.d_message("BoardChecker/insert_database: something happened")
         sys.exit(1)
 
 
