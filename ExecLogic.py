@@ -3,6 +3,7 @@ import time
 from pprint import pprint
 from config import Tradeconfig
 from datetime import datetime
+from TradeMethod import TradeMethod
 
 class ExecLogic:
 
@@ -21,6 +22,14 @@ class ExecLogic:
                 print("Cryptowatchの価格取得でエラー発生 : ",e)
                 print("10秒待機してやり直します")
                 time.sleep(10)
+            except:
+                t = TradeMethod()
+                t.d_message(s)
+                t.d_message("ExecLogic/get_price list index out of range?")
+                print("ExecLogic/get_price")
+                print("60秒待機してやり直します")
+                time.sleep(60)
+
 
     def buy_judge(self, i=0, data = None):
         # return self.__buy_judge_candle(i=i, data=data)

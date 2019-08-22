@@ -9,6 +9,7 @@ import hashlib
 from WrapperAPI import WrapperAPI
 from ExecLogic import ExecLogic
 from TradeMethod import TradeMethod
+import sqlite3
 
 
 
@@ -80,14 +81,50 @@ def wraptest():
 def logictest():
     ExecLogic().get_price(900,4)
 
-if __name__ == "__main__":
-    # position()
-    # bitflyer = ccxt.bitflyer({
-    #             'apiKey': Apikey.api_key,
-    #             'secret': Apikey.api_secret,
-    #             })
+def request_candle():
+    pair = "btcfxjpy"
+    response = requests.get("https://api.cryptowat.ch/markets/bitflyer/"+pair+"/ohlc",params = { "periods" : 60 ,"after" : int(time.time())-60*10})
+    response.raise_for_status()
+    response = response.json()
+    response_data = []
+    for i in range(10):
+        response_data.append(tuple(response["result"]["60"][i]))
     
-    # check_open_orders(bitflyer)
-    trader = TradeMethod()
-    trader.d_message("aaaaaaaa\nbbbbbbbbbb")
-    print("aaaaaaaaa\nbbbbbb")
+    return response_data
+
+def sqltest(data):
+    con = sqlite3.connect("test.db")
+
+    create = "CREATE TABLE IF NOT EXISTS btcfxjpy (CloseTime integer, OpenPrice integer, HighPrice integer, LowPrice integer, ClosePrice integer, BTCVolume real, JPYVolume real)"
+    con.execute(create)
+
+    unique = "CREATE UNIQUE INDEX IF NOT EXISTS time ON btcfxjpy(CloseTime)"
+    con.execute(unique)
+
+    for i in range(len(data)):
+        try:
+            con.execute("INSERT INTO btcfxjpy values (?,?,?,?,?,?,?)", data[i])
+        except sqlite3.IntegrityError:
+            print(i)
+
+
+
+    con.commit()
+    con.close()
+
+if __name__ == "__main__":
+    data1 = request_candle()
+    sqltest(data1)
+
+    time.sleep(120)
+
+    data2 = request_candle()
+    sqltest(data2)
+
+    con = sqlite3.connect("test.db")
+    cur = con.cursor()
+    cur.execute("SELECT * from btcfxjpy")
+    for row in cur:
+        print(row)
+
+    con.close()
