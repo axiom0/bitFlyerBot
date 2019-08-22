@@ -37,7 +37,7 @@ def insert_database(response_data):
         unique = "CREATE UNIQUE INDEX IF NOT EXISTS time ON "+ pair +"(CloseTime)"
         con.execute(unique)
 
-        for i in range(list_size/2-20,len(response_data)):
+        for i in range(int(list_size/2-20),len(response_data)):
             try:
                 con.execute("INSERT INTO " + pair + " values (?,?,?,?)", response_data[i])
             except sqlite3.IntegrityError:
